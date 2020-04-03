@@ -57,16 +57,22 @@ def find_replace(d, k, v, do_overwite, append = False):
                 break
     return found
 
-conf_file = "packaged.conf" if len(sys.argv) == 1 else sys.argv[1]
+conf_files = {}
 try:
-    try:
-        response = raw_input("Please enter the name of the installer config file; packaged.conf [default], setup_py.conf or macos.conf ").strip()
-    except:
-        response = input("Please enter the name of the installer config file; packaged.conf [default], setup_py.conf or macos.conf ").strip()
-    if len(response) == 0:
-        print("No installer config file was entered so packaged.config will be used.")
-    else:
-        conf_file = response
+    file_count = 1
+    files = [f for f in os.listdir('.') if os.path.isfile(f) and f.endswith(".conf")]
+    for f in files:
+        conf_files[file_count] = f
+        print(str(file_count) + " -> " + f)
+        file_count += 1
+    response = 0
+    while response == 0 or response > len(conf_files):
+        try:
+            response = int(raw_input("Enter the NUMBER of the installer config file ").strip())
+        except:
+            response = int(input("Enter the NUMBER of the installer config file ").strip())
+    conf_file = conf_files[response]
+    print("Installer Config file " + conf_file + " was chosen.")
     with open(conf_file) as infile:
         d = eval(infile.read().replace("\n", "").replace("\t", ""))
         copy_list = list(d["copy_paths"].split(","))
@@ -95,7 +101,7 @@ try:
         locations = {copy_list[i+1]:copy_list[i] for i in range(0, len(copy_list), 2)}
         paths = ["var pathweewx = ", "var pathpws = ", "var pathweewxbin = "]
         paths_values = ["/" + locations["www"].split("/var/www/html/")[1].split("/")[0] + "/", locations["www"].split("/var/www/html")[1], locations["user"].split("/user/")[0]]
-        change_permissions_recursive(d["www_path"].strip('][').split(','), paths, paths_values)
+        change_permissions_recursive([locations["www"]], paths, paths_values)
         if d["delete_extracted_files"] == "True":
             if extract_path != os.getcwd():
                 distutils.dir_util.remove_tree(extract_path)
