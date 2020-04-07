@@ -23,6 +23,20 @@ This version is assembled as an install package and uses the WeeWX utility wee_e
 
 A live example of Weather34 WeeWX skin can be seen at https://claydonsweather.org.uk
 
+# Credits
+
+Brian Underdown, the original designer of the Weather34 template whose original design was used to create this WeeWX skin.
+
+Gary Roderick for his original coding of Highcharts for WeeWX.
+
+Jerry Dietrich who's coding work is responsible for this upgrade. Also for his patience with me in grounding my regular flights of fantasy into workable realities.
+
+My small band of testers.
+
+William.
+
+The creators of WeeWX without which there would be no point.
+
 # Weather34 Historic Timeline of design 2014-2019 
 https://weather34.com/homeweatherstation/weather34timeline/weather34timeline.html
 
@@ -80,10 +94,13 @@ Meteobridge Version available via download maintained by Lightmaster (https://gi
 
 Cumulus Version available via download and more info supported by Ken True ( https://github.com/ktrue/CU-HWS ). This version now also supports WeeWX and WeatherCat
 
+# Credits for this version
 
 Apart from Brian Underdown without him, this template would never exist, I would aslo like to acknowledge the following people: -
 
 Jerry Dietrich for his massive contribution in converting my wild ideas into reality, putting me straight on my mediocre coding skills and having the patience of a dozen saints.
+
+Gary Roderick for his original coding of Highcharts for WeeWX.
 
 William Bailey aka Lightmaster who maitains the MB version of Weather34. Incredibly helpful and always on the end of Telegram when I need a chat, night or day.
 
@@ -91,13 +108,15 @@ Ken True for sharing files and who makes my job of maintaining the weeWX version
 
 Thomas Sosio for his invaluable contribution in producing the Meteobridge lookup code to translate WeeWX database output.
 
-David Marshall for contributing technical knowledge and solutions to create the wxchart .tmpl files and alternative solutions for weather alerts.
+David Marshall for contributing technical knowledge and solutions to create some original .tmpl files and alternative solutions for weather alerts.
 
 Taylormia for contributing his excellent setup example for instances where weeWX and server/template are remote to each other.
 
 Gary Portellas for a helpful suggestion to further simplify the installation process.
 
-All those unamed people who have helped me with testing updates
+All those unamed people who have helped me with testing updates.
+
+The creators of WeeWX without which there would be no point.
 
 # Alternative versions
 
@@ -121,7 +140,7 @@ https://github.com/weather34/Weather34-Weatherflow
 # This work is licensed under a Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License.
 http://creativecommons.org/licenses/by-nc-nd/4.0/
 
-# Credits and thanks to the contributors who made this all possible since 2015.
+# Credits and thanks to the contributors who made the original version of Weather34 possible between 2015 and 2019.
 
  Erik M Madsen for language idea and initial script
  
