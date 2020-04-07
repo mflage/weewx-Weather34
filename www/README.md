@@ -23,20 +23,6 @@ This version is assembled as an install package and uses the WeeWX utility wee_e
 
 A live example of Weather34 WeeWX skin can be seen at https://claydonsweather.org.uk
 
-# Credits
-
-Brian Underdown, the original designer of the Weather34 template whose original design was used to create this WeeWX skin.
-
-Gary Roderick for his original coding of Highcharts for WeeWX.
-
-Jerry Dietrich who's coding work is responsible for this upgrade. Also for his patience with me in grounding my regular flights of fantasy into workable realities.
-
-My small band of testers.
-
-William.
-
-The creators of WeeWX without which there would be no point.
-
 # Weather34 Historic Timeline of design 2014-2019 
 https://weather34.com/homeweatherstation/weather34timeline/weather34timeline.html
 
