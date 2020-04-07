@@ -1,5 +1,5 @@
 # Weather34 skin for WeeWX
-Weather Station website skin with Live Data for WeeWX. This version is compatible with WeeWX 3.9.2 / Python 2.7 and WeeWX 4.0.0 builds / Python 2.7 and Python 3.x.
+Weather Station website skin with Live Data for WeeWX. This version is compatible with WeeWX 3.9.2 / Python 2.7 and WeeWX 4.0.0 builds / Python 2.7 and Python 3.7.
 
 Version WX-HC20-IHVN-1.0.0
 
@@ -22,20 +22,6 @@ This version is assembled as an install package and uses the WeeWX utility wee_e
 # Demo
 
 A live example of Weather34 WeeWX skin can be seen at https://claydonsweather.org.uk
-
-# Credits
-
-Brian Underdown, the original designer of the Weather34 template whose original design was used to create this WeeWX skin.
-
-Gary Roderick for his original coding of Highcharts for WeeWX.
-
-Jerry Dietrich who's coding work is responsible for this upgrade. Also for his patience with me in grounding my regular flights of fantasy into workable realities.
-
-My small band of testers.
-
-William.
-
-The creators of WeeWX without which there would be no point.
 
 # Weather34 Historic Timeline of design 2014-2019 
 https://weather34.com/homeweatherstation/weather34timeline/weather34timeline.html
@@ -104,13 +90,13 @@ Gary Roderick for his original coding of Highcharts for WeeWX.
 
 William Bailey aka Lightmaster who maitains the MB version of Weather34. Incredibly helpful and always on the end of Telegram when I need a chat, night or day.
 
-Ken True for sharing files and who makes my job of maintaining the weeWX version so much easier.
+Ken True for sharing files and who makes my job of maintaining the WeeWX version so much easier.
 
 Thomas Sosio for his invaluable contribution in producing the Meteobridge lookup code to translate WeeWX database output.
 
 David Marshall for contributing technical knowledge and solutions to create some original .tmpl files and alternative solutions for weather alerts.
 
-Taylormia for contributing his excellent setup example for instances where weeWX and server/template are remote to each other.
+Taylormia for contributing his excellent setup example for instances where WeeWX and server/template are remote to each other.
 
 Gary Portellas for a helpful suggestion to further simplify the installation process.
 
