@@ -9,7 +9,7 @@ function downloadfromgit($filename) {
         $options  = array(
             CURLOPT_FILE => $fileopen,
             CURLOPT_TIMEOUT => 10,
-            CURLOPT_URL => 'https://github.com/steepleian/weewx-Weather34HC/blob/master/www/settings1.default.php'
+            CURLOPT_URL => 'https://github.com/steepleian/weewx-Weather34/blob/master/www/settings1.default.php'
         );
         $ch       = curl_init();
         curl_setopt_array($ch, $options);
@@ -18,7 +18,7 @@ function downloadfromgit($filename) {
         $fstat = fstat($fileopen);
         fclose($fileopen);
         if (!file_exists($filename) || $fstat['size'] < 100) {
-            echo ($filename . " did not download properly, please visit <a href='https://raw.githubusercontent.com/steepleian/weewx-Weather34HC/master/www/settings1.default.php?token=AEMVT7U4QB6O67Z35VADMUK6QGMRM' target='_blank'>https://raw.githubusercontent.com/steepleian/weewx-Weather34HC/master/www/settings1.default.php?token=AEMVT7U4QB6O67Z35VADMUK6QGMRM</a>, right click anywhere on the page and choose to save the file. Then copy the file into the root of your website (where you downloaded the website files to on your server).<br/>");
+            echo ($filename . " did not download properly, please visit <a href='https://raw.githubusercontent.com/steepleian/weewx-Weather34/master/www/settings1.default.php?token=AEMVT7U4QB6O67Z35VADMUK6QGMRM' target='_blank'>https://raw.githubusercontent.com/steepleian/weewx-Weather34/master/www/settings1.default.php?token=AEMVT7U4QB6O67Z35VADMUK6QGMRM</a>, right click anywhere on the page and choose to save the file. Then copy the file into the root of your website (where you downloaded the website files to on your server).<br/>");
             die();
         }
     }
