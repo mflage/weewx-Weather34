@@ -476,11 +476,14 @@ class Weather34RealTime(StdService):
         ForecastData(config_dict.get('Weather34WebServices', {}).get('filename', '/var/www/html/weewx/settings1.php'))
         
         # setup caching
+        self.cache_enable = True 
         self.cache_stale_time = 900
         self.cache_file = '/tmp/RetainedLoopValues.txt'
         self.retainedLoopValues = {}
         self.excludeFields = set([])
         if 'RetainLoopValues' in config_dict:
+            if 'cache_enable' in config_dict['RetainLoopValues']:
+                self.cache_enable = True if config_dict['RetainLoopValues'].get('cache_enable') == 'True' else False; 
             if 'cache_stale_time' in config_dict['RetainLoopValues']:
                 self.cache_stale_time = int(config_dict['RetainLoopValues'].get('cache_stale_time')) 
             if 'cache_directory' in config_dict['RetainLoopValues']:
@@ -492,7 +495,9 @@ class Weather34RealTime(StdService):
             if 'exclude_fields' in config_dict['RetainLoopValues']:
                 self.excludeFields = set(weeutil.weeutil.option_as_list(config_dict['RetainLoopValues'].get('exclude_fields', [])))
                 logdbg("excluding fields: %s" % (self.excludeFields,))
-        self.bind(weewx.NEW_LOOP_PACKET, self.newLoopPacket)
+        loginf("Weather34 RetainLoopValues in cache is: %s" % self.cache_enable)
+        if self.cache_enable:
+            self.bind(weewx.NEW_LOOP_PACKET, self.newLoopPacket)
 
         # configure the binding
         binding = d.get('binding', 'loop').lower()
@@ -513,7 +518,7 @@ class Weather34RealTime(StdService):
             except Exception as e:
                 logerr(str(e))	
         event.originalPacket = event.packet
-        # logdbg("Event packet before: %s" % (event.packet,))
+        #logdbg("Event packet before: %s" % (event.packet,))
         # replace the values in the retained packet if they have a value other than None or the field is listed in excludeFields
         self.retainedLoopValues.update( dict((k,v) for k,v in event.packet.items() if (v is not None or k in self.excludeFields)) )
         # if the new packet doesn't contain one of the excludeFields then remove it from the retainedLoopValues
@@ -521,7 +526,7 @@ class Weather34RealTime(StdService):
             if k in self.retainedLoopValues:
                 self.retainedLoopValues.pop(k)
         event.packet = self.retainedLoopValues.copy()
-        # logdbg("Event packet after: %s" % (event.packet,))
+        #logdbg("Event packet after: %s" % (event.packet,))
         try:
         	with open(self.cache_file, 'w') as out_file:
         		out_file.write(str(self.retainedLoopValues))
@@ -800,7 +805,7 @@ class Weather34RealTime(StdService):
         fields.append(self.format(data, '10min_high_gust', 1))        # 41 *
         fields.append(self.format(data, 'heatindex', 1))              # 42 *
         fields.append(self.format(data, 'humidex', 1))                # 43 *
-        fields.append(self.format(data, 'UV', 0))                     # 44
+        fields.append(self.format(data, 'UV', 1))                     # 44
         fields.append(self.format(data, 'ET_today', r_dp))            # 45 *
         fields.append(self.format(data, 'radiation', 0))              # 46
         fields.append(self.format(data, '10min_avg_wind_bearing', 0)) # 47 *
