@@ -14,6 +14,7 @@
 	include('archivedata.php');
         if (isset($weewxapi)){
 	$weather["rain_alltime"] = $weewxapi[151];
+		
 
 
 	
