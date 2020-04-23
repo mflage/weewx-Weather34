@@ -662,6 +662,26 @@ class w34highcharts_solar_week(SearchList):
         except:
                 infrared_json = None    
                                                        
+        # Create air quality pm2_5
+        try:
+                (time_start_vt, time_stop_vt, pm2_5_vt) = db_lookup().getSqlVectors(TimeSpan(_start_ts, timespan.stop), 'pm2_5')
+                pm2_5Round = int(self.generator.skin_dict['Units']['StringFormats'].get(pm2_5_vt[1], "1f")[-2])
+                pm2_5Round_vt =  [roundNone(x,pm2_5Round) if x != None else 0 for x in pm2_5_vt[0]]
+                pm2_5time_ms =  [time_stop_vt[0][0] if (x == 0) else time_stop_vt[0][x] - time_stop_vt[0][0] for x in range(len(time_stop_vt[0]))]
+                pm2_5_json = json.dumps(list(zip(pm2_5time_ms, pm2_5Round_vt)))
+        except:
+               pm2_5_json = None    
+                                                       
+        # Create air quality pm10_0
+        try:
+                (time_start_vt, time_stop_vt, pm10_0_vt) = db_lookup().getSqlVectors(TimeSpan(_start_ts, timespan.stop), 'pm10_0')
+                pm10_0Round = int(self.generator.skin_dict['Units']['StringFormats'].get(pm10_0_vt[1], "1f")[-2])
+                pm10_0Round_vt =  [roundNone(x,pm10_0Round) if x != None else 0 for x in pm10_0_vt[0]]
+                pm10_0time_ms =  [time_stop_vt[0][0] if (x == 0) else time_stop_vt[0][x] - time_stop_vt[0][0] for x in range(len(time_stop_vt[0]))]
+                pm10_0_json = json.dumps(list(zip(pm10_0time_ms, pm10_0Round_vt)))
+        except:
+               pm10_0_json = None    
+                                                       
         # Put into a dictionary to return
         self.search_list_extension = {
                                  'radiationWeekjson' : radiation_json,
@@ -674,6 +694,8 @@ class w34highcharts_solar_week(SearchList):
                                  'full_spectrumWeek_json' : spectrum_json,
                                  'luxWeek_json' : lux_json,
                                  'infraredWeek_json' : infrared_json,
+                                 'pm2_5Week_json' : pm2_5_json,
+                                 'pm10_0Week_json' : pm10_0_json,
                                  'utcOffset': utc_offset,
                                  'weekPlotStart' : _start_ts * 1000,
                                  'weekPlotEnd' : timespan.stop * 1000}
@@ -1253,6 +1275,30 @@ class w34highchartsYear(SearchList):
                 infraredMax_json = None
                 infraredAvg_json = None
                 
+        # Create pm2_5 json
+        try:
+                (pm2_5_time_vt, pm2_5_dict) = getDaySummaryVectors(db_lookup(), 'pm2_5', timespan,['max', 'avg'])
+                pm2_5Places = int(self.generator.skin_dict['Units']['StringFormats'].get(pm2_5_dict['max'][1], "1f")[-2])
+                pm2_5MaxRound = [roundNone(x,pm2_5Places) for x in pm2_5_dict['max'][0]]
+                pm2_5AvgRound = [roundNone(x,pm2_5Places) for x in pm2_5_dict['avg'][0]]
+                pm2_5Max_json = json.dumps(list(zip(time_ms, pm2_5MaxRound)))
+                pm2_5Avg_json = json.dumps(list(zip(time_ms, pm2_5AvgRound)))
+        except:
+                pm2_5Max_json = None
+                pm2_5Avg_json = None
+                
+        # Create pm10_0 json
+        try:
+                (pm10_0_time_vt, pm10_0_dict) = getDaySummaryVectors(db_lookup(), 'pm10_0', timespan,['max', 'avg'])
+                pm10_0Places = int(self.generator.skin_dict['Units']['StringFormats'].get(pm10_0_dict['max'][1], "1f")[-2])
+                pm10_0MaxRound = [roundNone(x,pm10_0Places) for x in pm10_0_dict['max'][0]]
+                pm10_0AvgRound = [roundNone(x,pm10_0Places) for x in pm10_0_dict['avg'][0]]
+                pm10_0Max_json = json.dumps(list(zip(time_ms, pm10_0MaxRound)))
+                pm10_0Avg_json = json.dumps(list(zip(time_ms, pm10_0AvgRound)))
+        except:
+                pm10_0Max_json = None
+                pm10_0Avg_json = None
+                
         # Put into a dictionary to return
         self.search_list_extension = {'outTempMinMax_json' : outTempMinMax_json,
                                  'outTempAvg_json' : outTempAvg_json,
@@ -1309,6 +1355,10 @@ class w34highchartsYear(SearchList):
                                  'luxAvg_json' : luxAvg_json,
                                  'infraredMax_json' : infraredMax_json,
                                  'infraredAvg_json' : infraredAvg_json,
+                                 'pm2_5Max_json' : pm2_5Max_json,
+                                 'pm2_5Avg_json' : pm2_5Avg_json,
+                                 'pm10_0Max_json' : pm10_0Max_json,
+                                 'pm10_0Avg_json' : pm10_0Avg_json,
                                  'utcOffset': utc_offset,
                                  'yearPlotStart' : _timespan.start * 1000,
                                  'yearPlotEnd' : _timespan.stop * 1000}
