@@ -69,7 +69,7 @@
 	$weather["wind_direction"]     = number_format($weewxapi[7],0);
 	$weather["wind_direction_avg"] = number_format($weewxapi[46],0);
 	$weather["wind_speed"]         = number_format($weewxapi[6]); // Instant Wind Speed
-	$weather["wind_gust_10min"]    = $weewxapi[40]; // Wind Speed Gust - Max speed of last 10 minutes
+	$weather["wind_gust_10min"]    = $weewxapi[201]; // Wind Speed Gust - Max speed of last 10 minutes
 	$weather["wind_gust_speed"]    = $weewxapi[40]; // 
 	$weather["wind_speed_bft"]     = $weewxapi[12];
 	$weather["wind_speed_max"]     = $weewxapi[30];	
