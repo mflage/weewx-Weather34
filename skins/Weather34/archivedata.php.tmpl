@@ -132,7 +132,7 @@ $weewxapi[37] = "$day.barometer.mintime.format(format_string="%H:%M")";
 ## $dayminintemp = "$day.inTemp.min.format(add_label=False, $localize=False)"; 
 $weewxapi[38] = $weewxw34[38];
 $weewxapi[39] = $weewxw34[39];
-$weewxapi[40] = "$span($time_delta=600).windSpeed.avg.format(add_label=False, $localize=False)";
+$weewxapi[40] = "$current.windGust.format(add_label=False, $localize=False)";
 $weewxapi[41] = "--";
 $weewxapi[42] = "$current.heatindex.format(add_label=False, $localize=False)";
 $weewxapi[43] = $weewxw34[43];
@@ -265,6 +265,7 @@ $weewxapi[168] = "$yesterday.outHumidity.maxtime.format(format_string="%Y%m%d%H%
 $weewxapi[169] = "$yesterday.outHumidity.min.format(add_label=False, $localize=False)";	
 $weewxapi[170] = "$yesterday.outHumidity.mintime.format(format_string="%Y%m%d%H%M%S")";  
 $weewxapi[200] = "$current.windrun.format(add_label=False, $localize=False)";
+$weewxapi[201] = "$span($time_delta=600).windSpeed.max.format(add_label=False, $localize=False)";
 
     $startcivil = "$almanac(horizon=-6).sun(use_center=1).rise.raw";
     $endcivil = "$almanac(horizon=-6).sun(use_center=1).set.raw";
@@ -276,7 +277,7 @@ $weewxapi[200] = "$current.windrun.format(add_label=False, $localize=False)";
 	$alltimemaxrainrate = "$alltime.rainRate.max.format(add_label=False, $localize=False)";
 	$alltimemaxrainratetime = "$alltime.rainRate.maxtime.format(format_string="%Y%m%d%H%M%S")";
 	
-
+    $pm25 = "$span($hour_delta=24).pm2_5.avg.format(add_label=False, $localize=False)";
 
 	$yesterdaymaxwind = "$yesterday.windSpeed.max.format(add_label=False, $localize=False)";
 	$yesterdaymaxwindtime = "$yesterday.windSpeed.maxtime.format(format_string="%Y%m%d%H%M%S")";
