@@ -144,6 +144,20 @@
 #end if
 "units": "$unit.label.UV"#slurp
 }, 
+"aqplot": {
+#if $pm2_5Max_json is not None
+"pm2_5Max": $pm2_5Max_json, 
+#end if
+#if $pm2_5Avg_json is not None
+"pm2_5Avg": $pm2_5Avg_json, 
+#end if
+#if $pm10_0Max_json is not None
+"pm10_0Max": $pm10_0Max_json, 
+#end if
+#if $pm10_0Avg_json is not None
+"pm10_0Avg": $pm10_0Avg_json 
+#end if
+}, 
 "windroseMonth": {#slurp
 "series": $wrmonth['windrosejson'], 
 "xAxis": {"categories": $wrmonth['xAxisCategoriesjson']}, 

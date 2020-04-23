@@ -58,5 +58,14 @@
 "infraredWeek": $infraredWeek_json, 
 #end if
 "units": "$unit.label.UV"#slurp
+},
+##
+"aqplot": {
+#if $pm2_5Week_json is not None
+"pm2_5Week": $pm2_5Week_json, 
+#end if
+#if $pm10_0Week_json is not None
+"pm10_0Week": $pm10_0Week_json 
+#end if
 }
 }]
