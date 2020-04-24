@@ -80,7 +80,7 @@ var jsonfileforplot = {
     indoorplot: [['indoor_derived_week.json'],['year.json'],['indoor_derived_week1.json']],
     tempsmallplot: [['temp_week.json'],['year.json'],[null]],
     tempallplot: [['temp_week.json'],['year.json'],['temp_week1.json']],
-    tempderivedplot: [['indoor_derived_week.json'],['year.json'],['indoor_derived_week1.json']],
+    tempderivedplot: [['indoor_derived_week.json','temp_week.json'],['year.json'],['indoor_derived_week1.json']],
     dewpointplot: [['temp_week.json'],['year.json'],['temp_week1.json']],
     humidityplot: [['temp_week.json'],['year.json'],['temp_week1.json']],
     barometerplot: [['bar_rain_week.json'],['year.json'],['bar_rain_week1.json']],
@@ -719,7 +719,7 @@ function create_tempderived_chart(options, span, seriesData, units){
         return do_radial_chart(options, dataMinMax, dataAvg, ['Windchill', 'Heatindex'], tempcolors);
     }
     else if (span[0] == "yearly"){
-        options = create_chart_options(options, 'columnrange', 'HeatIndex/Windchill/Apparent Ranges & Averages', '\xB0' + units.temp, [['Windchill Range', 'columnrange'],['Average Windchill','spline'],['Heatindex Range', 'columnrange'],['Average Heatindex','spline'],['Apparent Range', 'columnrange',, false,false],['Apparent Avg', 'spline',, false,false]]);
+        options = create_chart_options(options, 'columnrange', 'HeatIndex/Windchill Ranges & Averages', '\xB0' + units.temp, [['Windchill Range', 'columnrange'],['Average Windchill','spline'],['Heatindex Range', 'columnrange'],['Average Heatindex','spline'],['Apparent Range', 'columnrange',, false,false],['Apparent Avg', 'spline',, false,false]]);
         options.series[2].data = convert_temp(seriesData[0].windchillplot.units, units.temp, reinflate_time(seriesData[0].windchillplot.windchillminmax));
         options.series[3].data = convert_temp(seriesData[0].windchillplot.units, units.temp, reinflate_time(seriesData[0].windchillplot.windchillaverage));
         options.series[0].data = convert_temp(seriesData[0].windchillplot.units, units.temp, reinflate_time(seriesData[0].windchillplot.heatindexminmax));
@@ -731,20 +731,25 @@ function create_tempderived_chart(options, span, seriesData, units){
     }
     else if (span[0] == "weekly"){        
         if (compare_dates)
-            options = create_chart_options(options, 'spline', 'HeatIndex/Windchill/Apparent', '\xB0' + units.temp, [['HeatIndex', 'spline'],['Windchill','spline'],['Apparent', 'spline',,false,false],['HeatIndex', 'spline',,,,,1],['Windchill','spline',,,,,1],['Apparent', 'spline',,false,false,,1]]);
+            options = create_chart_options(options, 'spline', 'HeatIndex/Windchill', '\xB0' + units.temp, [['HeatIndex', 'spline'],['Windchill','spline'],['Apparent', 'spline',,false,false],['HeatIndex', 'spline',,,,,1],['Windchill','spline',,,,,1],['Apparent', 'spline',,false,false,,1]]);
         else
-            options = create_chart_options(options, 'spline', 'HeatIndex/Windchill/Apparent', '\xB0' + units.temp, [['HeatIndex', 'spline'],['Windchill','spline'],['Apparent', 'spline',,false,false]]);
+            options = create_chart_options(options, 'spline', 'HeatIndex/Windchill/Temperature', '\xB0' + units.temp, [['HeatIndex', 'spline'],['Windchill','spline'],['Temperature', 'spline'],['Apparent', 'spline',,false,false]]);
         options.series[1].data = convert_temp(seriesData[0].windchillplot.units, units.temp, reinflate_time(seriesData[0].windchillplot.windchill));
+        if (options.series[1].data[0][1] > convert_temp(seriesData[0].windchillplot.units, units.temp, [50])[0])
+           options.series[1].visible = false;
+        else
+           options.series[0].visible = false;
         options.series[0].data = convert_temp(seriesData[0].windchillplot.units, units.temp, reinflate_time(seriesData[0].windchillplot.heatindex));
+        options.series[2].data = convert_temp(seriesData[0].temperatureplot.units, units.temp, reinflate_time(seriesData[1].temperatureplot.outTemp));
         if (compare_dates){
             create_compare_days_ts(options.series[0].data, seriesData[1].windchillplot.windchill);
             options.series[5].data = convert_temp(seriesData[1].windchillplot.units, units.temp, reinflate_time(seriesData[1].windchillplot.windchill, options.series[0].data[0][0]));
             options.series[4].data = convert_temp(seriesData[1].windchillplot.units, units.temp, reinflate_time(seriesData[1].windchillplot.heatindex, options.series[0].data[0][0]));
         }
         if ("appTemp" in seriesData[0].temperatureplot){
-            options.series[2].data = convert_temp(seriesData[0].temperatureplot.units, units.temp, reinflate_time(seriesData[0].temperatureplot.appTemp));
-            options.series[2].visible = true;
-            options.series[2].showInLegend = true;
+            options.series[3].data = convert_temp(seriesData[0].temperatureplot.units, units.temp, reinflate_time(seriesData[0].temperatureplot.appTemp));
+            options.series[3].visible = true;
+            options.series[3].showInLegend = true;
             if (compare_dates){
                 options.series[6].data = convert_temp(seriesData[1].temperatureplot.units, units.temp, reinflate_time(seriesData[1].temperatureplot.appTemp, options.series[0].data[0][0]));
                 options.series[6].visible = true;
