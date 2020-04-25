@@ -100,6 +100,8 @@ Taylormia for contributing his excellent setup example for instances where WeeWX
 
 Gary Portellas for a helpful suggestion to further simplify the installation process.
 
+Drealine for his recent work on extending the French translations.
+
 All those unamed people who have helped me with testing updates.
 
 The creators of WeeWX without which there would be no point.
