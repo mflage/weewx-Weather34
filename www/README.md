@@ -1,5 +1,5 @@
 # Weather34 skin for WeeWX
-Weather Station website skin with Live Data for WeeWX. This version is compatible with WeeWX 3.9.2 / Python 2.7 and WeeWX 4.0.0 builds / Python 2.7 and Python 3.x.
+Weather Station website skin with Live Data for WeeWX. This version is compatible with WeeWX 3.9.2 / Python 2.7 and WeeWX 4.0.0 builds / Python 2.7 and Python 3.7.
 
 Version WX-HC20-IHVN-1.0.0
 
@@ -90,15 +90,17 @@ Gary Roderick for his original coding of Highcharts for WeeWX.
 
 William Bailey aka Lightmaster who maitains the MB version of Weather34. Incredibly helpful and always on the end of Telegram when I need a chat, night or day.
 
-Ken True for sharing files and who makes my job of maintaining the weeWX version so much easier.
+Ken True for sharing files and who makes my job of maintaining the WeeWX version so much easier.
 
 Thomas Sosio for his invaluable contribution in producing the Meteobridge lookup code to translate WeeWX database output.
 
 David Marshall for contributing technical knowledge and solutions to create some original .tmpl files and alternative solutions for weather alerts.
 
-Taylormia for contributing his excellent setup example for instances where weeWX and server/template are remote to each other.
+Taylormia for contributing his excellent setup example for instances where WeeWX and server/template are remote to each other.
 
 Gary Portellas for a helpful suggestion to further simplify the installation process.
+
+Drealine for his recent work on extending the French translations.
 
 All those unamed people who have helped me with testing updates.
 
