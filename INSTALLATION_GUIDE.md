@@ -72,7 +72,7 @@ Once completed, make sure you save weewx.conf
 		    Select macos if your WeeWX was installed by MacOS method		
 		
 * The installer will prompt you for the location of your WeeWX webserver folder. The default is set to 
-/var/www/html/weewx. If your path is the same, just press enter otherwise you must type in your full path.
+/var/www/html/weewx. If your path is the same, just press enter otherwise you must type in your full path. (For macOS users the default path is /Users/Shared/weewx/public_html/weather34/).
 
 * Restart WeeWX.
 
