@@ -37,11 +37,11 @@ Once completed, make sure you save weewx.conf
 		sudo python w34_installer.py
 		
 		    You will be prompted for the config file for your WeeWX install type.
-		    Enter packaged.conf if your WeeWX was installed by Debian, RedHat or Suse methods [default option]
+		    Select packaged if your WeeWX was installed by Debian, RedHat or Suse methods [default option]
 		    or
-		    Enter setup_py.confconf if your WeeWX was installed by setup.py method
+		    Select setup_py. if your WeeWX was installed by setup.py method
 		    or
-		    Enter packaged.conf if your WeeWX was installed by MacOS method
+		    Select macos if your WeeWX was installed by MacOS method
 		
 * Alternative install method 1: -
 
@@ -52,11 +52,11 @@ Once completed, make sure you save weewx.conf
 		sudo python w34_installer.py
 		
 		    You will be prompted for the config file for your WeeWX install type.
-		    Enter packaged.conf if your WeeWX was installed by Debian, RedHat or Suse methods [default option]
+		    Select packaged if your WeeWX was installed by Debian, RedHat or Suse methods [default option]
 		    or
-		    Enter setup_py.confconf if your WeeWX was installed by setup.py method
+		    Select setup_py. if your WeeWX was installed by setup.py method
 		    or
-		    Enter packaged.conf if your WeeWX was installed by MacOS method
+		    Select macos if your WeeWX was installed by MacOS method
 		
 * Alternative install method 2 (if you already have the installer from a previous installation): -
 
@@ -65,11 +65,11 @@ Once completed, make sure you save weewx.conf
 		sudo python w34_installer.py
 		
 		    You will be prompted for the config file for your WeeWX install type.
-		    Enter packaged.conf if your WeeWX was installed by Debian, RedHat or Suse methods [default option]
+		    Select packaged if your WeeWX was installed by Debian, RedHat or Suse methods [default option]
 		    or
-		    Enter setup_py.confconf if your WeeWX was installed by setup.py method
+		    Select setup_py if your WeeWX was installed by setup.py method
 		    or
-		    Enter packaged.conf if your WeeWX was installed by MacOS method		
+		    Select macos if your WeeWX was installed by MacOS method		
 		
 * The installer will prompt you for the location of your WeeWX webserver folder. The default is set to 
 /var/www/html/weewx. If your path is the same, just press enter otherwise you must type in your full path.
