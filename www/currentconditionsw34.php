@@ -13,6 +13,7 @@ $tw=date_sunrise(strtotime('+1 day', time()), SUNFUNCS_RET_STRING, $lat, $lon, 9
 $suns2 =date('G.i', $result['sunset']);$sunr2 =date('G.i', $result['sunrise']);$suns3 =date('G.i', $result['sunset']);$sunr3 =date('G.i', $result['sunrise']);$sunrisehour =date('G', $result['sunrise']);
 $sunsethour =date('G', $result['sunset']);$twighlight_begin =date('G:i', $result['civil_twilight_begin']);$twighlight_end =date('G:i', $result['civil_twilight_end']);$now =date('G.i');
 if ($windunit=='kts'){$windunit="kn";}
+
 ?>
 <div class="updatedtimecurrent">
 <?php $forecastime=filemtime('jsondata/metar34.txt');$weather34wuurl = file_get_contents("jsondata/metar34.txt");if(filesize('jsondata/metar34.txt')<10){echo  $online;}
@@ -85,6 +86,9 @@ else echo '<uppercase>',$sky_desc.'</uppercase><br>';
 echo "Average <oorange>Temperature</oorange> last 60 minutes ";if($weather["temp_avg"]>=20){echo "<oorange>" .$weather["temp_avg"]."</oorange>°<valuetext>".$tempunit;} else if($weather["temp_avg"]<=10){echo "<oblue>" .$weather["temp_avg"]."</oblue>°<valuetext>".$tempunit;}else if($weather["temp_avg"]<20){echo "<ogreen>" .$weather["temp_avg"]."</ogreen>°<valuetext>".$tempunit;}echo "</valuetext><br>";
 echo  "Max <oblue>Wind Speed</oblue> ";
 if ($windunit=='kts'){$windunit="kn";}
+if ($windunit=='kn'){$weather["wind_gust_10min"] = number_format(1.94384*$weather["wind_gust_10min"], 1);}
+if ($windunit=='km/h'){$weather["wind_gust_10min"] = number_format(3.6*$weather["wind_gust_10min"], 1);}
+if ($windunit=='mph'){$weather["wind_gust_10min"] = number_format(2.236936*$weather["wind_gust_10min"], 1);}
 if($weather["wind_gust_10min"]>=50){echo "<ored>" .$weather["wind_gust_10min"]."</ored> ".$windunit;}
 else if($weather["wind_gust_10min"]>=30){echo "<oorange>" .$weather["wind_gust_10min"]."</oorange><valuetext> ".$windunit;}
 else if($weather["wind_gust_10min"]>=0){echo "<ogreen>" .$weather["wind_gust_10min"]."</ogreen><valuetext> ".$windunit;}echo " </valuetext>last 10 minutes ";
