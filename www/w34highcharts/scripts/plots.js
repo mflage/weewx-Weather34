@@ -28,6 +28,7 @@ var createweeklyfunctions = {
     raduvplot: [addWeekOptions, create_raduv_chart],
     uvsmallplot: [addYearOptions, setUvSmall, create_uv_chart],
     raduvplot: [addYearOptions, create_raduv_chart],
+    airqualityplot: [addWeekOptions, create_aq_chart],
     tempsmallplot: [addYearOptions, setTempSmall, create_temperature_chart],
     barsmallplot: [addYearOptions, setBarSmall, create_barometer_chart],
     windsmallplot: [addYearOptions, setWindSmall, create_wind_chart],
@@ -57,6 +58,7 @@ var createyearlyfunctions = {
     luminosityplot: [addYearOptions, create_luminosity_chart],
     radiationplot: [addYearOptions, create_radiation_chart],
     raduvplot: [addYearOptions, create_raduv_chart],
+    airqualityplot: [addYearOptions, create_aq_chart],
     radsmallplot: [addYearOptions, setRadSmall, create_radiation_chart],
     uvplot: [addYearOptions, create_uv_chart],
     uvsmallplot: [addYearOptions, setUvSmall, create_uv_chart]
@@ -78,7 +80,7 @@ var jsonfileforplot = {
     indoorplot: [['indoor_derived_week.json'],['year.json'],['indoor_derived_week1.json']],
     tempsmallplot: [['temp_week.json'],['year.json'],[null]],
     tempallplot: [['temp_week.json'],['year.json'],['temp_week1.json']],
-    tempderivedplot: [['indoor_derived_week.json'],['year.json'],['indoor_derived_week1.json']],
+    tempderivedplot: [['indoor_derived_week.json','temp_week.json'],['year.json'],['indoor_derived_week1.json']],
     dewpointplot: [['temp_week.json'],['year.json'],['temp_week1.json']],
     humidityplot: [['temp_week.json'],['year.json'],['temp_week1.json']],
     barometerplot: [['bar_rain_week.json'],['year.json'],['bar_rain_week1.json']],
@@ -97,6 +99,7 @@ var jsonfileforplot = {
     luminosityplot: [['solar_week.json'],['year.json'],['solar_week1.json']],
     radiationplot: [['solar_week.json'],['year.json'],['solar_week1.json']],
     raduvplot: [['solar_week.json'],['year.json'],['solar_week1.json']],
+    airqualityplot: [['solar_week.json'],['year.json'],['solar_week1.json']],
     radsmallplot: [['solar_week.json'],['year.json'],[null]],
     uvplot: [['solar_week.json'],['year.json'],['solar_week1.json']],
     uvsmallplot: [['solar_week.json'],['year.json'],[null]]
@@ -106,8 +109,9 @@ var tempcolors = [[-10,"#3369e7"],[-5,"#3b9cac"],[0,"#00a4b4"],[5,"#00a4b4"],[10
 var humcolors = [[0,"#3369e7"],[10,"#3b9cac"],[20,"#00a4b4"],[30,"#00a4b4"],[40,"#88b04b"],[50,"#e6a141"],[60,"#ff7c39"],[70,"#efa80f"],[80,"#d05f2d"],[90,"#d86858"],[100,"#fd7641"]];
 var barcolors = [[28.0,"#3369e7"],[28.25,"#3b9cac"],[28.5,"#00a4b4"],[28.75,"#00a4b4"],[29.0,"#88b04b"],[29.25,"#e6a141"],[29.5,"#ff7c39"],[29.75,"#efa80f"],[30.0,"#d05f2d"],[30.25,"#d86858"],[30.5,"#fd7641"],[30.75,"#de2c52"],[31,"#de2c52"]];
 var windcolors = [[0,"#3369e7"],[2.5,"#3b9cac"],[5,"#00a4b4"],[7.5,"#00a4b4"],[10,"#88b04b"],[12.5,"#e6a141"],[15,"#ff7c39"],[17.5,"#efa80f"],[20,"#d05f2d"],[22.5,"#d86858"],[25,"#fd7641"],[27.5,"#de2c52"],[30,"#de2c52"]];
+var aqcolors = [[50,"#90b12a"],[100,"#ba923a"],[150,"#ff7c39"],[200,"#ff7c39"],[300,"#916392"],[400,"#d05041"]];
 var plotsnoswitch = ['rainmonthplot','windroseplot','lightningplot','bartempwindplot','windbarplot'];
-var radialplots = ['dewpointplot','temperatureplot','indoorplot','humidityplot','barometerplot','tempderivedplot','windplot'];
+var radialplots = ['dewpointplot','temperatureplot','indoorplot','humidityplot','barometerplot','tempderivedplot','windplot','airqualityplot'];
 var monthNames = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 var windrosespans = ["1h","24h","Week","Month","Year"];
 var realtimeXscaleFactor = 300/realtimeinterval;
@@ -715,11 +719,11 @@ function create_tempderived_chart(options, span, seriesData, units){
         return do_radial_chart(options, dataMinMax, dataAvg, ['Windchill', 'Heatindex'], tempcolors);
     }
     else if (span[0] == "yearly"){
-        options = create_chart_options(options, 'columnrange', 'Windchill Heatindex Apparent Ranges & Averages', '\xB0' + units.temp, [['Windchill Range', 'columnrange'],['Average Windchill','spline'],['Heatindex Range', 'columnrange'],['Average Heatindex','spline'],['Apparent Range', 'columnrange',, false,false],['Apparent Avg', 'spline',, false,false]]);
-        options.series[0].data = convert_temp(seriesData[0].windchillplot.units, units.temp, reinflate_time(seriesData[0].windchillplot.windchillminmax));
-        options.series[1].data = convert_temp(seriesData[0].windchillplot.units, units.temp, reinflate_time(seriesData[0].windchillplot.windchillaverage));
-        options.series[2].data = convert_temp(seriesData[0].windchillplot.units, units.temp, reinflate_time(seriesData[0].windchillplot.heatindexminmax));
-        options.series[3].data = convert_temp(seriesData[0].windchillplot.units, units.temp, reinflate_time(seriesData[0].windchillplot.heatindexaverage));
+        options = create_chart_options(options, 'columnrange', 'HeatIndex/Windchill Ranges & Averages', '\xB0' + units.temp, [['Windchill Range', 'columnrange'],['Average Windchill','spline'],['Heatindex Range', 'columnrange'],['Average Heatindex','spline'],['Apparent Range', 'columnrange',, false,false],['Apparent Avg', 'spline',, false,false]]);
+        options.series[2].data = convert_temp(seriesData[0].windchillplot.units, units.temp, reinflate_time(seriesData[0].windchillplot.windchillminmax));
+        options.series[3].data = convert_temp(seriesData[0].windchillplot.units, units.temp, reinflate_time(seriesData[0].windchillplot.windchillaverage));
+        options.series[0].data = convert_temp(seriesData[0].windchillplot.units, units.temp, reinflate_time(seriesData[0].windchillplot.heatindexminmax));
+        options.series[1].data = convert_temp(seriesData[0].windchillplot.units, units.temp, reinflate_time(seriesData[0].windchillplot.heatindexaverage));
         if ("appTempaverage" in seriesData[0].temperatureplot) {
             options.series[4].data = convert_temp(seriesData[0].temperatureplot.units, units.temp, reinflate_time(seriesData[0].temperatureplot.appTempminmax));
             options.series[5].data = convert_temp(seriesData[0].temperatureplot.units, units.temp, reinflate_time(seriesData[0].temperatureplot.appTempaverage));
@@ -727,20 +731,25 @@ function create_tempderived_chart(options, span, seriesData, units){
     }
     else if (span[0] == "weekly"){        
         if (compare_dates)
-            options = create_chart_options(options, 'spline', 'Windchill HeatIndex Apparent', '\xB0' + units.temp, [['Windchill', 'spline'],['Heatindex','spline'],['Apparent', 'spline',,false,false],['Windchill', 'spline',,,,,1],['Heatindex','spline',,,,,1],['Apparent', 'spline',,false,false,,1]]);
+            options = create_chart_options(options, 'spline', 'HeatIndex/Windchill', '\xB0' + units.temp, [['HeatIndex', 'spline'],['Windchill','spline'],['Apparent', 'spline',,false,false],['HeatIndex', 'spline',,,,,1],['Windchill','spline',,,,,1],['Apparent', 'spline',,false,false,,1]]);
         else
-            options = create_chart_options(options, 'spline', 'Windchill HeatIndex Apparent', '\xB0' + units.temp, [['Windchill', 'spline'],['Heatindex','spline'],['Apparent', 'spline',,false,false]]);
-        options.series[0].data = convert_temp(seriesData[0].windchillplot.units, units.temp, reinflate_time(seriesData[0].windchillplot.windchill));
-        options.series[1].data = convert_temp(seriesData[0].windchillplot.units, units.temp, reinflate_time(seriesData[0].windchillplot.heatindex));
+            options = create_chart_options(options, 'spline', 'HeatIndex/Windchill/Temperature', '\xB0' + units.temp, [['HeatIndex', 'spline'],['Windchill','spline'],['Temperature', 'spline'],['Apparent', 'spline',,false,false]]);
+        options.series[1].data = convert_temp(seriesData[0].windchillplot.units, units.temp, reinflate_time(seriesData[0].windchillplot.windchill));
+        if (options.series[1].data[0][1] > 50)
+           options.series[1].visible = false;
+        else
+           options.series[0].visible = false;
+        options.series[0].data = convert_temp(seriesData[0].windchillplot.units, units.temp, reinflate_time(seriesData[0].windchillplot.heatindex));
+        options.series[2].data = convert_temp(seriesData[0].temperatureplot.units, units.temp, reinflate_time(seriesData[1].temperatureplot.outTemp));
         if (compare_dates){
             create_compare_days_ts(options.series[0].data, seriesData[1].windchillplot.windchill);
-            options.series[4].data = convert_temp(seriesData[1].windchillplot.units, units.temp, reinflate_time(seriesData[1].windchillplot.windchill, options.series[0].data[0][0]));
-            options.series[5].data = convert_temp(seriesData[1].windchillplot.units, units.temp, reinflate_time(seriesData[1].windchillplot.heatindex, options.series[0].data[0][0]));
+            options.series[5].data = convert_temp(seriesData[1].windchillplot.units, units.temp, reinflate_time(seriesData[1].windchillplot.windchill, options.series[0].data[0][0]));
+            options.series[4].data = convert_temp(seriesData[1].windchillplot.units, units.temp, reinflate_time(seriesData[1].windchillplot.heatindex, options.series[0].data[0][0]));
         }
         if ("appTemp" in seriesData[0].temperatureplot){
-            options.series[2].data = convert_temp(seriesData[0].temperatureplot.units, units.temp, reinflate_time(seriesData[0].temperatureplot.appTemp));
-            options.series[2].visible = true;
-            options.series[2].showInLegend = true;
+            options.series[3].data = convert_temp(seriesData[0].temperatureplot.units, units.temp, reinflate_time(seriesData[0].temperatureplot.appTemp));
+            options.series[3].visible = true;
+            options.series[3].showInLegend = true;
             if (compare_dates){
                 options.series[6].data = convert_temp(seriesData[1].temperatureplot.units, units.temp, reinflate_time(seriesData[1].temperatureplot.appTemp, options.series[0].data[0][0]));
                 options.series[6].visible = true;
@@ -908,7 +917,7 @@ function create_wind_barb_chart(options, span, seriesData, units){
     wb1 = [];
     wd = reinflate_time(seriesData[0].winddirplot.windDir);
     ws = convert_wind(seriesData[0].windplot.units, units.wind, reinflate_time(seriesData[0].windplot.windGust));
-    for (var i = j = 0; i < ws.length; i += 10, j++){
+    for (var i = j = 0; i < ws.length; i+=10, j++){
        wb[j]  = [ws[i][0], ws[i][1] > 0 || !hide_zero_wind_barb ? ws[i][1] : null, wd[i][1]]; 
        wb1[j] = [ws[i][0], ws[i][1], wd[i][1]]; }
     options.plotOptions.series.turboThreshold = 0; //Need this to work around highcharts bug with wind barb 
@@ -922,7 +931,7 @@ function create_wind_barb_chart(options, span, seriesData, units){
     options.rangeSelector.selected = 1;
     options.yAxis[0].title.text = "(" + units.wind + ")";
     options.tooltip.formatter = function(){if (this.points[1] == undefined) tooltip = '<span style="font-size: 10px">' + Highcharts.dateFormat('%e %B %Y %H:%M',new Date(this.points[0].x)) + '</span><br/>' + '<span style="color: ' + this.points[0].series.color+'">' + getTranslation("WindBarb") + ": " + 0 + " " + units.wind + " (" + getTranslation('Calm') + ')</span><br/>';
-                                              else {spd = this.points[1].y; for (var i =0; i < this.points[0].series.beaufortName.length; i++){bn = this.points[0].series.beaufortName[i]; if (convert_wind(units.wind, "mph", spd) < this.points[0].series.beaufortFloor[i]) break;} tooltip = '<span style="font-size: 10px">' + Highcharts.dateFormat('%e %B %Y %H:%M',new Date(this.points[0].x)) + '</span><br/>' + '<span style="color: ' + this.points[1].series.color+'">' + getTranslation("WindBarb") + ": " + spd + " " + units.wind + " (" + bn + ')</span><br/><span style="color: '+ this.points[0].series.color + '">' + getTranslation("Wind Direction") + ": " + (this.points[0].point.options.direction == null ? getTranslation("Calm") : this.points[0].point.options.direction + '\xB0') + '</span><br/>';}
+                                              else {spd = this.points[1].y;bn = this.points[0].series.beaufortName[Math.ceil(Math.cbrt(Math.pow(convert_wind(units.wind, "ms", spd)/0.836, 2)))];tooltip = '<span style="font-size: 10px">' + Highcharts.dateFormat('%e %B %Y %H:%M',new Date(this.points[0].x)) + '</span><br/>' + '<span style="color: ' + this.points[1].series.color+'">' + getTranslation("WindBarb") + ": " + spd + " " + units.wind + " (" + bn + ')</span><br/><span style="color: '+ this.points[0].series.color + '">' + getTranslation("Wind Direction") + ": " + (this.points[0].point.options.direction == null ? getTranslation("Calm") : this.points[0].point.options.direction + '\xB0') + '</span><br/>';}
                                           return tooltip;};
     return options;
 };
@@ -1370,6 +1379,42 @@ function create_uv_chart(options, span, seriesData, units){
     return options;
 };
 
+function create_aq_chart(options, span, seriesData, units){
+    if (do_radial){
+        var dataMinMax = [];
+        var dataAvg = [];
+        dataMinMax.push(reinflate_time(seriesData[0].aqplot.pm2_5Max));
+        dataMinMax.push(reinflate_time(seriesData[0].aqplot.pm10_0Max));
+        dataAvg.push(reinflate_time(seriesData[0].aqplot.pm2_5Avg));
+        dataAvg.push(reinflate_time(seriesData[0].aqplot.pm10_0Avg));
+        return do_radial_chart(options, dataMinMax, dataAvg, ['PM 2.5', 'PM 10.0'], aqcolors);
+    }
+    else if (span[0] == "yearly"){
+        options = create_chart_options(options, 'column', 'Air Quality Maximum & Average', null, [['PM 2.5 Max', 'column'], ['PM 2.5 Avg', 'column'], ['PM 10.0 Max', 'column'], ['PM 10.0 Avg', 'column']]);
+        options.series[0].data = reinflate_time(seriesData[0].aqplot.pm2_5Max);
+        options.series[1].data = reinflate_time(seriesData[0].aqplot.pm2_5Avg);
+        options.series[2].data = reinflate_time(seriesData[0].aqplot.pm10_0Max);
+        options.series[3].data = reinflate_time(seriesData[0].aqplot.pm10_0Avg);
+    }
+    else if (span[0] == "weekly"){
+        if (compare_dates)
+            options = create_chart_options(options, 'spline', 'Air Quality', null, [['PM 2.5', 'spline'], ['PM 10.0', 'spline'], ['PM 2.5', 'spline',,,,,1],['PM 10.0', 'spline',,,,,1]]);
+        else
+            options = create_chart_options(options, 'spline', 'Air Quality', null, [['PM 2.5', 'spline'],['PM 10.0', 'spline']]);
+        options.series[0].data = reinflate_time(seriesData[0].aqplot.pm2_5Week);
+        options.series[1].data = reinflate_time(seriesData[0].aqplot.pm10_0Week);
+        if (compare_dates){
+            create_compare_days_ts(options.series[0].data, seriesData[1].aqplot.pm2_5Week);
+            options.series[2].data = reinflate_time(seriesData[1].aqplot.pm2_5Week, options.series[0].data[0][0]);
+            options.series[3].data = reinflate_time(seriesData[1].aqplot.pm10_0Week, options.series[0].data[0][0]);
+        }
+    }
+    options.yAxis[0].min = 0;
+    options.yAxis[0].minorTickInterval = 1;
+    options.yAxis[0].title.text = "(μg/㎥)";
+    return options;
+};
+
 function do_radial_chart(options, dataMinMax, dataAvg, names, colors){
     minMax = [];
     for (var k = 0; k < dataMinMax.length; k++){
@@ -1377,7 +1422,7 @@ function do_radial_chart(options, dataMinMax, dataAvg, names, colors){
         for (var i = 0; i < dataMinMax[k].length; i++){
             var date = new Date(dataMinMax[k][i][0]);
             for (var j = 0; j < colors.length-1; j++){
-                if (dataAvg[k][i][1] <= colors[j][0] && colors[j+1][0] > dataAvg[k][i][1] || j == colors.length -1){
+                if (dataMinMax[k][i][1] <= colors[j][0] && colors[j+1][0] > dataAvg[k][i][1] || j == colors.length -1){
                     if (dataMinMax[k][i].length == 2)
                         minMax[k].push({x:dataMinMax[k][i][0], low:0, high:dataMinMax[k][i][1], name:date.getFullYear() + "-" + (date.getMonth()+1) +"-" + date.getDate(), color:colors[j][1]});
                     else
