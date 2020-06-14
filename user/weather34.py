@@ -264,6 +264,9 @@ def calc_daylight_hours(alm):
         return 0
     elif alm.time_ts < sunset:
         return (alm.time_ts - sunrise) / 3600.0
+    # Norway says hi!
+    if not sunset:
+        return 24
     return (sunset - sunrise) / 3600.0
 
 def calc_is_sunny(rad, max_rad, threshold):
