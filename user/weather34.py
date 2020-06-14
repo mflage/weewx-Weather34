@@ -486,7 +486,7 @@ class Weather34RealTime(StdService):
         self.excludeFields = set([])
         if 'RetainLoopValues' in config_dict:
             if 'cache_enable' in config_dict['RetainLoopValues']:
-                self.cache_enable = True if config_dict['RetainLoopValues'].get('cache_enable') == 'True' else False; 
+                self.cache_enable = True if config_dict['RetainLoopValues'].get('cache_enable') == 'True' else False
             if 'cache_stale_time' in config_dict['RetainLoopValues']:
                 self.cache_stale_time = int(config_dict['RetainLoopValues'].get('cache_stale_time')) 
             if 'cache_directory' in config_dict['RetainLoopValues']:
